@@ -1,17 +1,18 @@
-//
-//  StudyFinderApp.swift
-//  StudyFinder
-//
-//  Created by Eden Hallett on 5/5/2026.
-//
-
 import SwiftUI
 
 @main
 struct StudyFinderApp: App {
+    @StateObject private var loginManager = LoginManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if loginManager.isLoggedIn {
+                HomeView()
+                    .environmentObject(loginManager)
+            } else {
+                LoginView()
+                    .environmentObject(loginManager)
+            }
         }
     }
 }
