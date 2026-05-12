@@ -11,6 +11,8 @@ struct HomeView: View {
     @State private var places: [Place] = []
     @State private var showOverlay: Bool = false
     @State private var selectedPlace: Place?
+    @State private var shouldNavigate: Bool = false
+    @State private var navigationCoordinate: CLLocationCoordinate2D?
     
     let locationManager = CLLocationManager()
     
@@ -19,6 +21,8 @@ struct HomeView: View {
             ForEach(places, id: \.id) { place in
                 Marker(place.name, systemImage: place.marker, coordinate: place.coordinate).tag(String(place.name))
             }
+            
+            UserAnnotation()
             
             if let route {
                 MapPolyline(route.polyline).stroke(.blue, lineWidth: 4)
@@ -46,8 +50,18 @@ struct HomeView: View {
             }
         }
         .mapStyle(.standard(pointsOfInterest: .excludingAll))
-        .sheet(item: $selectedPlace, onDismiss: { selectedMarker = nil}) { place in
-            PlaceView(place: place)
+        .sheet(item: $selectedPlace, onDismiss: {
+            if shouldNavigate, let destination = navigationCoordinate {
+                getDirections(to: destination)
+            }
+            shouldNavigate = false
+            selectedMarker = nil
+            
+        }) { place in
+            PlaceView(onNavigate: {
+                navigationCoordinate = place.coordinate
+                shouldNavigate = true
+            }, place: place,)
         }
         
     }
