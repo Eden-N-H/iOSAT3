@@ -9,6 +9,8 @@ struct HomeView: View {
     @State private var route: MKRoute?
     @State private var selectedMarker: String?
     @State private var places: [Place] = []
+    @State private var showOverlay: Bool = false
+    @State private var selectedPlace: Place?
     
     let locationManager = CLLocationManager()
     
@@ -17,8 +19,6 @@ struct HomeView: View {
             ForEach(places, id: \.id) { place in
                 Marker(place.name, systemImage: place.marker, coordinate: place.coordinate).tag(String(place.name))
             }
-            
-            UserAnnotation()
             
             if let route {
                 MapPolyline(route.polyline).stroke(.blue, lineWidth: 4)
@@ -38,11 +38,17 @@ struct HomeView: View {
             MapScaleView()
         }
         .onChange(of: selectedMarker ) { _, newValue in
+            
             if let place = places.first(where: { $0.name == newValue }) {
-                getDirections(to: place.coordinate)
+                selectedPlace = place
+                showOverlay = true
+                //getDirections(to: place.coordinate)
             }
         }
         .mapStyle(.standard(pointsOfInterest: .excludingAll))
+        .sheet(item: $selectedPlace, onDismiss: { selectedMarker = nil}) { place in
+            PlaceView(place: place)
+        }
         
     }
     
