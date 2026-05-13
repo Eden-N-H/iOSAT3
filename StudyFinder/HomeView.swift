@@ -68,10 +68,10 @@ struct HomeView: View {
             shouldNavigate = false
             selectedMarker = nil
         }) { place in
-            PlaceView(onNavigate: {
+            PlaceView(isFavourite: favouriteBinding(for: place), onNavigate: {
                 navigationCoordinate = place.coordinate
                 shouldNavigate = true
-            }, place: place, isFavourite: favouriteBinding(for: place))
+            }, place: place)
         }
     }
     
