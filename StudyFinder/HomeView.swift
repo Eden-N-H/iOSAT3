@@ -13,56 +13,95 @@ struct HomeView: View {
     @State private var selectedPlace: Place?
     @State private var shouldNavigate: Bool = false
     @State private var navigationCoordinate: CLLocationCoordinate2D?
+    @State private var searchInput: String = ""
+    @State private var showSearch: Bool = false
+    
+    private var filteredListofPlaces: [Place] {
+        if !searchInput.isEmpty {
+            return places.filter({ $0.name.lowercased().contains(searchInput.lowercased()) })
+        }
+        else {
+            return []
+        }
+    }
     
     let locationManager = CLLocationManager()
     
     var body: some View {
-        Map(initialPosition: cameraPosition, selection: $selectedMarker) {
-            ForEach(places, id: \.id) { place in
-                Marker(place.name, systemImage: place.marker, coordinate: place.coordinate).tag(String(place.name))
-            }
-            
-            UserAnnotation()
-            
-            if let route {
-                MapPolyline(route.polyline).stroke(.blue, lineWidth: 4)
-            }
-            
-        }
-        .onAppear {
-            DispatchQueue.main.async {
-                locationManager.requestWhenInUseAuthorization()
-                places = readPlacesCSV(filename: "placeList")
-            }
-        }
-        .mapControls {
-            MapUserLocationButton()
-            MapCompass()
-            MapPitchToggle()
-            MapScaleView()
-        }
-        .onChange(of: selectedMarker ) { _, newValue in
-            
-            if let place = places.first(where: { $0.name == newValue }) {
-                selectedPlace = place
-                showOverlay = true
-            }
-        }
-        .mapStyle(.standard(pointsOfInterest: .excludingAll))
-        .sheet(item: $selectedPlace, onDismiss: {
-            if shouldNavigate, let destination = navigationCoordinate {
-                getDirections(to: destination)
-            }
-            shouldNavigate = false
-            selectedMarker = nil
-            
-        }) { place in
-            PlaceView(onNavigate: {
-                navigationCoordinate = place.coordinate
-                shouldNavigate = true
-            }, place: place,)
-        }
         
+        GeometryReader { geometry in
+            ZStack {
+                Map(initialPosition: cameraPosition, selection: $selectedMarker) {
+                    ForEach(places, id: \.id) { place in
+                        Marker(place.name, systemImage: place.marker, coordinate: place.coordinate).tag(String(place.name))
+                    }
+                    
+                    UserAnnotation()
+                    
+                    if let route {
+                        MapPolyline(route.polyline).stroke(.blue, lineWidth: 4)
+                    }
+                    
+                }
+                .onAppear {
+                    DispatchQueue.main.async {
+                        locationManager.requestWhenInUseAuthorization()
+                        places = readPlacesCSV(filename: "placeList")
+                    }
+                }
+                .mapControls {
+                    MapUserLocationButton()
+                    MapCompass()
+                    MapPitchToggle()
+                    MapScaleView()
+                }
+                .onChange(of: selectedMarker ) { _, newValue in
+                    
+                    if let place = places.first(where: { $0.name == newValue }) {
+                        selectedPlace = place
+                        showOverlay = true
+                    }
+                }
+                .mapStyle(.standard(pointsOfInterest: .excludingAll))
+                .sheet(item: $selectedPlace, onDismiss: {
+                    if shouldNavigate, let destination = navigationCoordinate {
+                        getDirections(to: destination)
+                    }
+                    shouldNavigate = false
+                    selectedMarker = nil
+                    
+                }) { place in
+                    PlaceView(onNavigate: {
+                        navigationCoordinate = place.coordinate
+                        shouldNavigate = true
+                    }, place: place,)
+                }
+                
+                VStack(spacing: 0) {
+                    TextField("Search", text: $searchInput)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: geometry.size.width * 0.8)
+                    
+                    ScrollView {
+                        VStack(spacing: 0){
+                            ForEach(filteredListofPlaces, id: \.id) { place in
+                                Text(place.name)
+                                    .frame(width: geometry.size.width * 0.8)
+                                    .background(.white)
+                                    .onTapGesture {
+                                        selectedMarker = place.name
+                                        searchInput = ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                
+
+                
+                }
+            
+        }
     }
     
     func getUserLocation() async -> CLLocationCoordinate2D? {
@@ -92,7 +131,7 @@ struct HomeView: View {
                 route = directions.routes.first
             }
             catch {
-                print("Error")
+                print("Error: \(error.localizedDescription)")
             }
         }
     }
@@ -137,3 +176,4 @@ struct HomeView: View {
 #Preview {
     HomeView()
 }
+
