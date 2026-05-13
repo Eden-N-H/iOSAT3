@@ -32,8 +32,50 @@ struct HomeView: View {
     }
     
     let locationManager = CLLocationManager()
-    
+
     var body: some View {
+        TabView {
+            mapView
+                .tabItem {
+                    Label("Map", systemImage: "map")
+                }
+            
+            FavouritesView(
+                favouritePlaces: places.filter { $0.isFavourite },
+                selectedPlace: $selectedPlace
+            )
+            .tabItem {
+                Label("Favourites", systemImage: "heart.fill")
+            }
+        }
+        .onAppear {
+            locationManager.requestWhenInUseAuthorization()
+            
+            if places.isEmpty {
+                places = readPlacesCSV(filename: "placeList")
+            }
+            
+            Task {
+                if let coordinate = await getUserLocation() {
+                    cameraPosition = .region(.init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                }
+            }
+        }
+        .sheet(item: $selectedPlace, onDismiss: {
+            if shouldNavigate, let destination = navigationCoordinate {
+                getDirections(to: destination)
+            }
+            shouldNavigate = false
+            selectedMarker = nil
+        }) { place in
+            PlaceView(onNavigate: {
+                navigationCoordinate = place.coordinate
+                shouldNavigate = true
+            }, place: place, isFavourite: favouriteBinding(for: place))
+        }
+    }
+    
+    private var mapView: some View {
         
         GeometryReader { geometry in
             ZStack {
@@ -49,15 +91,7 @@ struct HomeView: View {
                     }
                     
                 }
-                .onAppear {
-                    locationManager.requestWhenInUseAuthorization()
-                    places = readPlacesCSV(filename: "placeList")
-                    Task {
-                        if let coordinate = await getUserLocation() {
-                            cameraPosition = .region(.init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                        }
-                    }
-                }
+                
                 .mapControls {
                     MapUserLocationButton()
                     MapCompass()
@@ -72,19 +106,6 @@ struct HomeView: View {
                     }
                 }
                 .mapStyle(.standard(pointsOfInterest: .excludingAll))
-                .sheet(item: $selectedPlace, onDismiss: {
-                    if shouldNavigate, let destination = navigationCoordinate {
-                        getDirections(to: destination)
-                    }
-                    shouldNavigate = false
-                    selectedMarker = nil
-                    
-                }) { place in
-                    PlaceView(onNavigate: {
-                        navigationCoordinate = place.coordinate
-                        shouldNavigate = true
-                    }, place: place, isFavourite: favouriteBinding(for: place))
-                }
                 
                 VStack(spacing: 0) {
                     TextField("Search", text: $searchInput)
