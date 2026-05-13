@@ -31,9 +31,7 @@ struct PlaceView: View {
                 }
                 .accessibilityLabel(isFavourite ? "Remove from favourites" : "Add to favourites")
             }
-            
-            Text(place.name).font(.title).bold()
-            Text("Rating: \(place.rating)")
+            Text("Rating: \(place.rating, specifier: "%g")")
             Text("Wifi: \(place.hasWifi ? "Yes" : "No")")
             Text("Outlets: \(place.hasOutlets ? "Yes" : "No")")
             Text("Noise Level: \(place.noiseLevel)")
