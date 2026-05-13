@@ -18,8 +18,8 @@ struct PlaceView: View {
         VStack {
             Text(place.name).font(.title).bold()
             Text("Rating: \(place.rating)")
-            Text("Wifi: \(place.hasWifi ? "Yes : No")")
-            Text("Outlets: \(place.hasOutlets ? "Yes : No")")
+            Text("Wifi: \(place.hasWifi ? "Yes" : "No")")
+            Text("Outlets: \(place.hasOutlets ? "Yes" : "No")")
             Text("Noise Level: \(place.noiseLevel)")
             
             Button("Navigate") {

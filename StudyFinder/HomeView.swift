@@ -46,7 +46,6 @@ struct HomeView: View {
             if let place = places.first(where: { $0.name == newValue }) {
                 selectedPlace = place
                 showOverlay = true
-                //getDirections(to: place.coordinate)
             }
         }
         .mapStyle(.standard(pointsOfInterest: .excludingAll))
@@ -113,7 +112,7 @@ struct HomeView: View {
 
             guard columns.count >= 9,
                 let latitude = Double(columns[1]),
-                let longitude = Double(columns[2])
+                let longitude = Double(columns[2]),
                 let rating = Double(columns[5])
             else {
                 return nil
