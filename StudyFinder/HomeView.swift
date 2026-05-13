@@ -111,15 +111,24 @@ struct HomeView: View {
             let columns = row
                 .split(separator: ",")
 
-            guard columns.count >= 4,
+            guard columns.count >= 9,
                 let latitude = Double(columns[1]),
                 let longitude = Double(columns[2])
+                let rating = Double(columns[5])
             else {
                 return nil
             }
             
             
-            return Place(name: String(columns[0]), coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), marker: String(columns[3]))
+            return Place(
+                name: String(columns[0]), 
+                coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), 
+                marker: String(columns[3]),
+                type: String(columns[4]),
+                rating: rating,
+                hasWifi: String(columns[6]).lowercased() == "true",
+                hasOutlets: String(columns[7]).lowercased() == "true",
+                noiseLevel: String(columns[8]))
         }
         
     }
