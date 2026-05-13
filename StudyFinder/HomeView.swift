@@ -3,9 +3,15 @@ import MapKit
 
 struct HomeView: View {
     
-    let cameraPosition: MapCameraPosition = .region(.init(center: .init(latitude: -33.883702711471514, longitude: 151.20016681156335), latitudinalMeters: 1300, longitudinalMeters: 1300))
-    //make it a state variable for a dynamic map
-    
+    @State private var cameraPosition: MapCameraPosition = .region(.init(
+        center: .init(
+            latitude: -33.883702711471514,
+            longitude: 151.20016681156335),
+        latitudinalMeters: 1300,
+        longitudinalMeters: 1300
+            )
+    )
+
     @State private var route: MKRoute?
     @State private var selectedMarker: String?
     @State private var places: [Place] = []
@@ -31,7 +37,7 @@ struct HomeView: View {
         
         GeometryReader { geometry in
             ZStack {
-                Map(initialPosition: cameraPosition, selection: $selectedMarker) {
+                Map(position: $cameraPosition, selection: $selectedMarker) {
                     ForEach(places, id: \.id) { place in
                         Marker(place.name, systemImage: place.marker, coordinate: place.coordinate).tag(String(place.name))
                     }
@@ -44,9 +50,12 @@ struct HomeView: View {
                     
                 }
                 .onAppear {
-                    DispatchQueue.main.async {
-                        locationManager.requestWhenInUseAuthorization()
-                        places = readPlacesCSV(filename: "placeList")
+                    locationManager.requestWhenInUseAuthorization()
+                    places = readPlacesCSV(filename: "placeList")
+                    Task {
+                        if let coordinate = await getUserLocation() {
+                            cameraPosition = .region(.init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        }
                     }
                 }
                 .mapControls {
@@ -80,13 +89,13 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     TextField("Search", text: $searchInput)
                         .textFieldStyle(.roundedBorder)
-                        .frame(width: geometry.size.width * 0.8)
+                        .frame(width: geometry.size.width * 0.65)
                     
                     ScrollView {
                         VStack(spacing: 0){
-                            ForEach(filteredListofPlaces, id: \.id) { place in
+                            ForEach(filteredListofPlaces.prefix(10), id: \.id) { place in
                                 Text(place.name)
-                                    .frame(width: geometry.size.width * 0.8)
+                                    .frame(width: geometry.size.width * 0.65)
                                     .background(.white)
                                     .onTapGesture {
                                         selectedMarker = place.name

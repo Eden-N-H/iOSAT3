@@ -1,3 +1,98 @@
-﻿Name,Latitude,Longitude,SystemImage,Type,Rating,Wifi,Outlets,NoiseLevel
-UTS Library,-33.88370271,151.2001668,building.columns.fill,Library,4.5,true,true,Quiet
-Cornerstone Cafe UTS,-33.88300853,151.19951,cup.and.saucer.fill,Cafe,4.0,true,false,Moderate
+Name,Latitude,Longitude,SystemImage,Type,Rating,Wifi,Outlets,NoiseLevel
+UTS Library,-33.88370271,151.2001668,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+Cornerstone Café UTS,-33.88300853,151.19951,cup.and.saucer.fill,Cafe,4.8,TRUE,FALSE,Moderate
+Noelle's Café,-33.88193977,151.2033472,cup.and.saucer.fill,Cafe,4.9,FALSE,FALSE,Moderate
+Mr Jones Café,-33.87648103,151.1958707,cup.and.saucer.fill,Cafe,4.9,FALSE,FALSE,Noisy
+Café Cre Asion,-33.8729474,151.1961537,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Noisy
+Knock Specialty Coffee,-33.88931201,151.2063147,cup.and.saucer.fill,Cafe,4.8,FALSE,FALSE,Moderate
+The University of Notre Dame Australia Library,-33.8845717,151.1966676,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Darling Square Library,-33.87762025,151.2022774,building.columns.fill,Library,3.5,TRUE,TRUE,Moderate
+Waterloo Library,-33.8987027,151.2068925,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Single O Surry Hills,-33.8876,151.2099,cup.and.saucer.fill,Cafe,4.7,TRUE,FALSE,Moderate
+Surry Hills Library,-33.8895,151.2117,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Artificer Coffee,-33.8864,151.2087,cup.and.saucer.fill,Cafe,4.8,FALSE,FALSE,Quiet
+Paramount Coffee Project,-33.8815,151.2072,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+Sample Coffee Surry Hills,-33.8869,151.2081,cup.and.saucer.fill,Cafe,4.5,TRUE,FALSE,Moderate
+Gumption by Coffee Alchemy,-33.8694,151.2076,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Moderate
+Customs House Library,-33.8613,151.2104,building.columns.fill,Library,4.6,TRUE,TRUE,Quiet
+State Library of NSW,-33.8686,151.2114,building.columns.fill,Library,4.7,TRUE,TRUE,Quiet
+Fisher Library USYD,-33.8888,151.1873,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Newtown Library,-33.8966,151.1794,building.columns.fill,Library,4.5,TRUE,TRUE,Quiet
+Glebe Library,-33.8773,151.1868,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Kings Cross Library,-33.8738,151.2231,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+Paddington Library,-33.8836,151.2289,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Ultimo Library,-33.8784,151.1997,building.columns.fill,Library,4.1,TRUE,TRUE,Quiet
+Haymarket Library,-33.8796,151.2044,building.columns.fill,Library,4.0,TRUE,TRUE,Quiet
+Mecca Coffee CBD,-33.8678,151.2071,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Moderate
+Room Ten,-33.8692,151.2088,cup.and.saucer.fill,Cafe,4.7,FALSE,FALSE,Moderate
+Edition Roasters Darling Square,-33.8776,151.2022,cup.and.saucer.fill,Cafe,4.7,TRUE,TRUE,Moderate
+Edition Roasters Wynyard,-33.8669,151.2063,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+Skittle Lane Coffee,-33.8953,151.1788,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Campos Coffee Newtown,-33.8958,151.1789,cup.and.saucer.fill,Cafe,4.7,FALSE,FALSE,Noisy
+Glee Coffee Newtown,-33.8972,151.1791,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Moderate
+Brewtown Newtown,-33.9001,151.1785,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Noisy
+Two Chaps Marrickville,-33.9101,151.1567,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+The Grounds of Alexandria,-33.9149,151.1940,cup.and.saucer.fill,Cafe,4.5,TRUE,FALSE,Noisy
+Primary Coffee Roasters Potts Point,-33.8712,151.2247,cup.and.saucer.fill,Cafe,4.7,FALSE,FALSE,Quiet
+Celsius Coffee Co Kirribilli,-33.8476,151.2123,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Moderate
+Outta Coffee Haymarket,-33.8796,151.2042,cup.and.saucer.fill,Cafe,4.7,FALSE,FALSE,Quiet
+Dukes Coffee Barangaroo,-33.8617,151.2013,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+South Coffee Barangaroo,-33.8622,151.2009,cup.and.saucer.fill,Cafe,4.4,FALSE,FALSE,Moderate
+Regiment Coffee,-33.8694,151.2072,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Noisy
+Proudly Ordinary Chippendale,-33.8882,151.1991,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+Coffee Alchemy Marrickville,-33.9086,151.1601,cup.and.saucer.fill,Cafe,4.8,FALSE,FALSE,Moderate
+Marrickville Library,-33.9107,151.1563,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Dulwich Hill Library,-33.9147,151.1392,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+Balmain Library,-33.8593,151.1795,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Leichhardt Library,-33.8833,151.1575,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Ashfield Library,-33.8869,151.1244,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+Redfern Library,-33.8933,151.2044,building.columns.fill,Library,4.1,TRUE,TRUE,Quiet
+Green Square Library,-33.9089,151.2023,building.columns.fill,Library,4.6,TRUE,TRUE,Quiet
+Erskineville Library,-33.9003,151.1882,building.columns.fill,Library,4.2,TRUE,FALSE,Quiet
+Barefoot Coffee Manly,-33.7969,151.2845,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Rollers Bakehouse Newtown,-33.8974,151.1784,cup.and.saucer.fill,Cafe,4.7,FALSE,FALSE,Noisy
+Three Williams Redfern,-33.8942,151.2055,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+Rustic Canteen Chippendale,-33.8871,151.1978,cup.and.saucer.fill,Cafe,4.4,TRUE,FALSE,Moderate
+Hitch Espresso Pyrmont,-33.8716,151.1952,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Pyrmont Library,-33.8710,151.1948,building.columns.fill,Library,4.0,TRUE,TRUE,Quiet
+Stump Coffee Glebe,-33.8788,151.1874,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Sanguine Espresso Glebe,-33.8801,151.1862,cup.and.saucer.fill,Cafe,4.4,FALSE,FALSE,Quiet
+Madame Souffle Rozelle,-33.8614,151.1726,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Rozelle Library,-33.8598,151.1723,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+The Reformatory Chippendale,-33.8887,151.1994,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+Reuben Hills Surry Hills,-33.8839,151.2086,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Noisy
+Mecca Coffee Surry Hills,-33.8842,151.2079,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Faculty of Arts Library USYD,-33.8892,151.1881,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+UNSW Library,-33.9173,151.2313,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Kensington Library,-33.9019,151.2232,building.columns.fill,Library,4.1,TRUE,TRUE,Quiet
+Randwick Library,-33.9148,151.2376,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Coogee Library,-33.9227,151.2534,building.columns.fill,Library,4.1,TRUE,FALSE,Quiet
+Bare Espresso Coogee,-33.9221,151.2527,cup.and.saucer.fill,Cafe,4.4,FALSE,FALSE,Moderate
+Short Stop Coffee Bondi,-33.8919,151.2755,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Bondi Library,-33.8904,151.2739,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+Skittle Lane Bondi,-33.8903,151.2748,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Waverley Library,-33.9009,151.2553,building.columns.fill,Library,4.5,TRUE,TRUE,Quiet
+Ampersand Cafe Bookstore Paddington,-33.8838,151.2271,cup.and.saucer.fill,Cafe,4.5,TRUE,FALSE,Quiet
+Harpo's Espresso Paddington,-33.8831,151.2263,cup.and.saucer.fill,Cafe,4.4,FALSE,FALSE,Moderate
+Longlina Coffee Darlinghurst,-33.8762,151.2182,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Quiet
+Balmoral Espresso Mosman,-33.8264,151.2412,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Mosman Library,-33.8270,151.2406,building.columns.fill,Library,4.5,TRUE,TRUE,Quiet
+Neutral Bay Library,-33.8353,151.2181,building.columns.fill,Library,4.2,TRUE,TRUE,Quiet
+Willoughby Library,-33.7986,151.1999,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Chatswood Library,-33.7969,151.1833,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Batch Espresso Crows Nest,-33.8285,151.2038,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+North Sydney Library,-33.8397,151.2070,building.columns.fill,Library,4.3,TRUE,TRUE,Quiet
+Incognito Espresso North Sydney,-33.8401,151.2065,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Moderate
+Stir Espresso Lane Cove,-33.8177,151.1683,cup.and.saucer.fill,Cafe,4.4,FALSE,FALSE,Moderate
+Lane Cove Library,-33.8173,151.1688,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
+Stranded Coffee Annandale,-33.8817,151.1698,cup.and.saucer.fill,Cafe,4.5,FALSE,FALSE,Quiet
+Annandale Library,-33.8821,151.1689,building.columns.fill,Library,4.1,TRUE,FALSE,Quiet
+Rosebery Specialty Coffee,-33.9138,151.2019,cup.and.saucer.fill,Cafe,4.4,TRUE,FALSE,Moderate
+Zetland Library,-33.9072,151.2088,building.columns.fill,Library,4.0,TRUE,TRUE,Quiet
+Bearded Tit Redfern,-33.8928,151.2062,cup.and.saucer.fill,Cafe,4.3,TRUE,FALSE,Noisy
+Cornersmith Marrickville,-33.9082,151.1574,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Moderate
+Ghostwriter Coffee,-33.8704,151.2096,cup.and.saucer.fill,Cafe,4.6,FALSE,FALSE,Quiet
+Vintage Espresso Newtown,-33.8981,151.1793,cup.and.saucer.fill,Cafe,4.4,FALSE,FALSE,Moderate
+Hive Bar Chippendale,-33.8878,151.1986,cup.and.saucer.fill,Cafe,4.3,TRUE,FALSE,Noisy
+Circa Espresso Parramatta,-33.8141,151.0056,cup.and.saucer.fill,Cafe,4.6,TRUE,FALSE,Moderate
+Parramatta Library,-33.8153,151.0031,building.columns.fill,Library,4.4,TRUE,TRUE,Quiet
