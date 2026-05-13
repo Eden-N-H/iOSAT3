@@ -83,7 +83,7 @@ struct HomeView: View {
                     PlaceView(onNavigate: {
                         navigationCoordinate = place.coordinate
                         shouldNavigate = true
-                    }, place: place,)
+                    }, place: place, isFavourite: favouriteBinding(for: place))
                 }
                 
                 VStack(spacing: 0) {
@@ -143,6 +143,20 @@ struct HomeView: View {
                 print("Error: \(error.localizedDescription)")
             }
         }
+    }
+
+    private func favouriteBinding(for place: Place) -> Binding<Bool> {
+        Binding(
+            get: {
+                places.first(where: { $0.id == place.id })?.isFavourite ?? place.isFavourite
+            },
+            set: { newValue in
+                if let index = places.firstIndex(where: { $0.id == place.id }) {
+                    places[index].isFavourite = newValue
+                }
+                selectedPlace?.isFavourite = newValue
+            }
+        )
     }
     
     func readPlacesCSV(filename: String) -> [Place] {
