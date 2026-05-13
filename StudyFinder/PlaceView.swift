@@ -10,6 +10,7 @@ import SwiftUI
 struct PlaceView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @State var isFavourite: Bool
     var onNavigate: () -> Void
     
     let place: Place
