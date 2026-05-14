@@ -23,6 +23,11 @@ struct HomeView: View {
     @State private var searchInput: String = ""
     @State private var showSearch: Bool = false
     
+    private var favouritePlacesKey: String {
+        let username = UserDefaults.standard.string(forKey: "savedUsername") ?? "default"
+        return "favouritePlaces.\(username)"
+    }
+    
     private var filteredListofPlaces: [Place] {
         if !searchInput.isEmpty {
             return places.filter({ $0.name.lowercased().contains(searchInput.lowercased()) })
@@ -54,6 +59,7 @@ struct HomeView: View {
             
             if places.isEmpty {
                 places = readPlacesCSV(filename: "placeList")
+                loadFavouritePlaces()
                 reviewsByPlace = readReviewsCSV(filename: "placeReview")
             }
             
@@ -178,8 +184,25 @@ struct HomeView: View {
                     places[index].isFavourite = newValue
                 }
                 selectedPlace?.isFavourite = newValue
+                saveFavouritePlaces()
             }
         )
+    }
+
+    private func loadFavouritePlaces() {
+        let favouriteNames = Set(UserDefaults.standard.stringArray(forKey: favouritePlacesKey) ?? [])
+        
+        for index in places.indices {
+            places[index].isFavourite = favouriteNames.contains(places[index].name)
+        }
+    }
+
+    private func saveFavouritePlaces() {
+        let favouriteNames = places
+            .filter { $0.isFavourite }
+            .map { $0.name }
+        
+        UserDefaults.standard.set(favouriteNames, forKey: favouritePlacesKey)
     }
     
     func readPlacesCSV(filename: String) -> [Place] {
