@@ -22,6 +22,7 @@ struct HomeView: View {
     @State private var navigationCoordinate: CLLocationCoordinate2D?
     @State private var searchInput: String = ""
     @State private var showSearch: Bool = false
+    @State private var selectedTab: Int = 0
     
     private var favouritePlacesKey: String {
         let username = UserDefaults.standard.string(forKey: "savedUsername") ?? "default"
@@ -40,11 +41,11 @@ struct HomeView: View {
     let locationManager = CLLocationManager()
 
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             mapView
                 .tabItem {
                     Label("Map", systemImage: "map")
-                }
+                }.tag(0)
             
             FavouritesView(
                 favouritePlaces: places.filter { $0.isFavourite },
@@ -52,7 +53,7 @@ struct HomeView: View {
             )
             .tabItem {
                 Label("Favourites", systemImage: "heart.fill")
-            }
+            }.tag(1)
         }
         .onAppear {
             locationManager.requestWhenInUseAuthorization()
@@ -71,6 +72,7 @@ struct HomeView: View {
         }
         .sheet(item: $selectedPlace, onDismiss: {
             if shouldNavigate, let destination = navigationCoordinate {
+                selectedTab = 0
                 getDirections(to: destination)
             }
             shouldNavigate = false
@@ -114,26 +116,40 @@ struct HomeView: View {
                     }
                 }
                 .mapStyle(.standard(pointsOfInterest: .excludingAll))
-                
-                VStack(spacing: 0) {
-                    TextField("Search", text: $searchInput)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: geometry.size.width * 0.65)
-                    
-                    ScrollView {
-                        VStack(spacing: 0){
-                            ForEach(filteredListofPlaces.prefix(10), id: \.id) { place in
-                                Text(place.name)
-                                    .frame(width: geometry.size.width * 0.65)
-                                    .background(.white)
-                                    .onTapGesture {
-                                        selectedMarker = place.name
-                                        searchInput = ""
-                                    }
+                VStack {
+                    VStack(spacing: 0) {
+                        TextField("Search", text: $searchInput)
+                            .frame(width: geometry.size.width * 0.6)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .padding()
+                            .background(Color.white.opacity(0.9))
+                            .cornerRadius(12)
+                            
+                        
+                        
+                            VStack(spacing: 0){
+                                ForEach(filteredListofPlaces.prefix(10), id: \.id) { place in
+                                    Text(place.name)
+                                        .frame(width: geometry.size.width * 0.65)
+                                        .background(.white)
+                                        .onTapGesture {
+                                            selectedMarker = place.name
+                                            searchInput = ""
+                                        }
+                                    
+                                }.padding(8)
+                                
                                 }
-                            }
-                        }
-                    }
+                            
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(12)
+                        
+                }
+                
+                    Spacer()
+                    
+                }.padding(.top, 8)
                 
 
                 
@@ -167,6 +183,7 @@ struct HomeView: View {
             do {
                 let directions = try await MKDirections(request: request).calculate()
                 route = directions.routes.first
+                //make it so that the map zooms out when you click navigate
             }
             catch {
                 print("Error: \(error.localizedDescription)")

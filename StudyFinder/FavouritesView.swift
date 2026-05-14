@@ -11,6 +11,7 @@ struct FavouritesView: View {
     @Binding var selectedPlace: Place?
     
     var body: some View {
+        
         NavigationStack {
             Group {
                 if favouritePlaces.isEmpty {
