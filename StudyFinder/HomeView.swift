@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var route: MKRoute?
     @State private var selectedMarker: String?
     @State private var places: [Place] = []
+    @State private var reviewsByPlace: [String: [String]] = [:]
     @State private var showOverlay: Bool = false
     @State private var selectedPlace: Place?
     @State private var shouldNavigate: Bool = false
@@ -53,6 +54,7 @@ struct HomeView: View {
             
             if places.isEmpty {
                 places = readPlacesCSV(filename: "placeList")
+                reviewsByPlace = readReviewsCSV(filename: "placeReview")
             }
             
             Task {
