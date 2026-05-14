@@ -55,11 +55,9 @@ struct HomeView: View {
             if places.isEmpty {
                 places = readPlacesCSV(filename: "placeList")
                 reviewsByPlace = readReviewsCSV(filename: "placeReview")
-            }
-            
-            Task {
-                if let coordinate = await getUserLocation() {
-                    cameraPosition = .region(.init(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                
+                if let firstPlace = places.first {
+                    cameraPosition = .region(.init(center: firstPlace.coordinate, latitudinalMeters: 1300, longitudinalMeters: 1300))
                 }
             }
         }
@@ -182,9 +180,19 @@ struct HomeView: View {
         )
     }
     
+    private func csvContent(filename: String) -> String? {
+        let fileURL = Bundle.main.url(forResource: filename, withExtension: "csv")
+            ?? Bundle.main.url(forResource: filename, withExtension: "csv", subdirectory: "Resources")
+        
+        guard let fileURL else {
+            return nil
+        }
+        
+        return try? String(contentsOf: fileURL, encoding: .utf8)
+    }
+    
     func readPlacesCSV(filename: String) -> [Place] {
-        guard let path = Bundle.main.path(forResource: filename, ofType: "csv"),
-              let content = try? String(contentsOfFile: path, encoding: .utf8) else {
+        guard let content = csvContent(filename: filename) else {
                 return []
             }
         
@@ -218,8 +226,7 @@ struct HomeView: View {
     }
 
     func readReviewsCSV(filename: String) -> [String: [String]] {
-        guard let path = Bundle.main.path(forResource: filename, ofType: "csv"),
-              let content = try? String(contentsOfFile: path, encoding: .utf8) else {
+        guard let content = csvContent(filename: filename) else {
                 return [:]
             }
         
