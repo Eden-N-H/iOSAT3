@@ -9,9 +9,12 @@ import SwiftUI
 
 struct PlaceView: View {
     
+    @State private var showReviewOverlay: Bool = false
+    
     @Environment(\.dismiss) private var dismiss
     @Binding var isFavourite: Bool
     var onNavigate: () -> Void
+    var onReviewSubmit: () -> Void
     
     let place: Place
     let reviews: [String]
@@ -78,11 +81,32 @@ struct PlaceView: View {
                         } else {
                             ScrollView {
                                 ForEach(reviews, id: \.self) { review in
-                                    Text(review)
-                                        .padding(8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    let segment = review.split(separator: "|", maxSplits: 1)
+                                    let starRating = Int(segment.first ?? "0") ?? 0
+                                    let reviewText = segment.last ?? "No review"
+                                    
+                                    VStack {
+                                        HStack {
+                                            ForEach (1...5, id: \.self) { number in
+                                                if number <= starRating {
+                                                    Image(systemName: "star.fill").foregroundStyle(.yellow)
+                                                }
+                                                else {
+                                                    Image(systemName: "star").foregroundStyle(.yellow)
+                                                }
+                                                
+                                            }
+                                        }
+                                        Text(reviewText)
+                                            .padding(8)
+                                    }
+                                    .padding(8).frame(maxWidth: .infinity, alignment: .leading)
                                         .background(.thinMaterial)
                                         .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    
+
+                                        
                                 }
                             }.frame(height: geometry.size.height * 0.3)
                                 .padding(8)
@@ -103,6 +127,18 @@ struct PlaceView: View {
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(12)
+                    
+                    Button("Review"){
+                        showReviewOverlay = true
+                    }.fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                        .sheet(isPresented: $showReviewOverlay, onDismiss: { onReviewSubmit()}) {
+                            ReviewView(place: place)
+                        }
                 }
                 .padding()
                 .background(Color.white.opacity(0.75))

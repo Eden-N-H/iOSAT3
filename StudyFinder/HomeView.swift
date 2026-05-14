@@ -23,6 +23,7 @@ struct HomeView: View {
     @State private var searchInput: String = ""
     @State private var showSearch: Bool = false
     @State private var selectedTab: Int = 0
+    @State private var noLocationError: Bool = false
     
     private var favouritePlacesKey: String {
         let username = UserDefaults.standard.string(forKey: "savedUsername") ?? "default"
@@ -78,10 +79,28 @@ struct HomeView: View {
             shouldNavigate = false
             selectedMarker = nil
         }) { place in
-            PlaceView(isFavourite: favouriteBinding(for: place), onNavigate: {
+            PlaceView(
+                isFavourite: favouriteBinding(for: place), onNavigate: {
                 navigationCoordinate = place.coordinate
                 shouldNavigate = true
-            }, place: place, reviews: reviewsByPlace[place.name] ?? [])
+            }, onReviewSubmit: {
+                reviewsByPlace = readReviewsCSV(filename: "placeReview")
+            },
+                
+                place: place, reviews: reviewsByPlace[place.name] ?? [])
+        }
+        .alert("Location Services Disabled", isPresented: $noLocationError) {
+            
+            Button("Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+            }
+            
+            Button("Ignore", role: .cancel) {
+            }
+        }message: {
+            Text("You have to enable location services to use navigation features.")
         }
     }
     
@@ -131,14 +150,18 @@ struct HomeView: View {
                             VStack(spacing: 0){
                                 ForEach(filteredListofPlaces.prefix(10), id: \.id) { place in
                                     Text(place.name)
+                                        .padding(8)
                                         .frame(width: geometry.size.width * 0.65)
-                                        .background(.white)
+                                        .background(selectedMarker == place.name ? Color.blue.opacity(0.1) : Color.clear)
                                         .onTapGesture {
                                             selectedMarker = place.name
-                                            searchInput = ""
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                searchInput = ""
+                                            }
+                                            
                                         }
                                     
-                                }.padding(8)
+                                }
                                 
                                 }
                             
@@ -159,6 +182,11 @@ struct HomeView: View {
     }
     
     func getUserLocation() async -> CLLocationCoordinate2D? {
+        
+        guard locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways else {
+            return nil
+        }
+        
         let updates = CLLocationUpdate.liveUpdates()
         
         do {
@@ -173,7 +201,10 @@ struct HomeView: View {
     
     func getDirections(to destination: CLLocationCoordinate2D) {
         Task {
-            guard let userLocation = await getUserLocation() else { return }
+            guard let userLocation = await getUserLocation() else {
+                noLocationError = true
+                return
+            }
             
             let request = MKDirections.Request()
             request.source = MKMapItem(location: .init(latitude: userLocation.latitude, longitude: userLocation.longitude), address: nil)
@@ -183,7 +214,18 @@ struct HomeView: View {
             do {
                 let directions = try await MKDirections(request: request).calculate()
                 route = directions.routes.first
-                //make it so that the map zooms out when you click navigate
+                
+                if let boundingRect = directions.routes.first?.polyline.boundingMapRect {
+                    cameraPosition = .rect(
+                        MKMapRect(
+                            x: boundingRect.origin.x - boundingRect.size.width * 0.3,
+                            y: boundingRect.origin.y - boundingRect.size.height * 0.3,
+                            width: boundingRect.size.width * 1.6,
+                            height: boundingRect.size.height * 1.6)
+                        )
+                }
+                
+                
             }
             catch {
                 print("Error: \(error.localizedDescription)")
@@ -283,6 +325,15 @@ struct HomeView: View {
             }
         }
         
+        for place in places {
+            let reviewKey = "reviews.\(place.name)"
+            let reviews = UserDefaults.standard.stringArray(forKey: reviewKey) ?? []
+            if !reviews.isEmpty {
+                let existingReviews = reviewsByPlace[place.name] ?? []
+                reviewsByPlace[place.name] = existingReviews + reviews
+            
+        }
+        }
         return reviewsByPlace
     }
 }
