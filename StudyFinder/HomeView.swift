@@ -73,7 +73,7 @@ struct HomeView: View {
             PlaceView(isFavourite: favouriteBinding(for: place), onNavigate: {
                 navigationCoordinate = place.coordinate
                 shouldNavigate = true
-            }, place: place)
+            }, place: place, reviews: reviewsByPlace[place.name] ?? [])
         }
     }
     
@@ -215,6 +215,35 @@ struct HomeView: View {
                 noiseLevel: String(columns[8]))
         }
         
+    }
+
+    func readReviewsCSV(filename: String) -> [String: [String]] {
+        guard let path = Bundle.main.path(forResource: filename, ofType: "csv"),
+              let content = try? String(contentsOfFile: path, encoding: .utf8) else {
+                return [:]
+            }
+        
+        let rows = content.components(separatedBy: .newlines)
+            .dropFirst()
+        
+        var reviewsByPlace: [String: [String]] = [:]
+        
+        for row in rows {
+            let columns = row.split(separator: ",", maxSplits: 1)
+            
+            guard columns.count == 2 else {
+                continue
+            }
+            
+            let placeName = String(columns[0]).trimmingCharacters(in: .whitespacesAndNewlines)
+            let review = String(columns[1]).trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if !placeName.isEmpty && !review.isEmpty {
+                reviewsByPlace[placeName, default: []].append(review)
+            }
+        }
+        
+        return reviewsByPlace
     }
 }
 
