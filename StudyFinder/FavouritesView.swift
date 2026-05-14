@@ -30,7 +30,7 @@ struct FavouritesView: View {
                                         .font(.headline)
                                         .foregroundStyle(.primary)
                                     
-                                    Text("\(place.type) - Rating: \(place.rating)")
+                                    Text("\(place.type) - Rating: \(place.rating, specifier: "%g")")
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
                                 }
