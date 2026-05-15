@@ -1,9 +1,3 @@
-//
-//  FavourtiesView.swift
-//  StudyFinder
-//
-//  Created by Tristan Lim on 13/5/2026.
-//
 import SwiftUI
 
 struct FavouritesView: View {
